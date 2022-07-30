@@ -1,11 +1,10 @@
 using Alura.Estacionamento.Alura.Estacionamento.Modelos;
 using Alura.Estacionamento.Modelos;
-using System;
 using Xunit;
 
 namespace Alura.Estacionamento.Testes
 {
-    public class VeiculoTestes
+    public class VeiculoTeste
     {
         //Arrange
         //Act
@@ -37,8 +36,11 @@ namespace Alura.Estacionamento.Testes
         [Fact]
         public void TestarTipoVeiculo()
         {
+            //Arrange
             var veiculo = new Veiculo();
+            //Action
 
+            //Assert
             Assert.Equal(TipoVeiculo.Automovel, veiculo.Tipo);
         }
     }
