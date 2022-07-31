@@ -6,16 +6,19 @@ namespace Alura.Estacionamento.Modelos
 {
     public class Patio
     {
-
         public Patio()
         {
             Faturado = 0;
             veiculos = new List<Veiculo>();
         }
+
         private List<Veiculo> veiculos;
+        public List<Veiculo> Veiculos { get => veiculos; set => veiculos = value; }
         private double faturado;
         public double Faturado { get => faturado; set => faturado = value; }
-        public List<Veiculo> Veiculos { get => veiculos; set => veiculos = value; }
+        public Operador operador { get; set; }
+        public Operador Operador { get { return operador; } set { operador = value; } }
+
         public double TotalFaturado()
         {
             return this.Faturado;
@@ -30,7 +33,8 @@ namespace Alura.Estacionamento.Modelos
         public void RegistrarEntradaVeiculo(Veiculo veiculo)
         {
             veiculo.HoraEntrada = DateTime.Now;
-            this.Veiculos.Add(veiculo);
+            GerarTicket(veiculo);
+            Veiculos.Add(veiculo);
         }
 
         public string RegistrarSaidaVeiculo(String placa)
@@ -79,9 +83,9 @@ namespace Alura.Estacionamento.Modelos
             return informacao;
         }
 
-        public Veiculo PesquisaVeiculo(string placa)
+        public Veiculo PesquisaVeiculo(string idTicket)
         {
-            var carroLocalizado = this.Veiculos.Find(x => x.Placa == placa);
+            var carroLocalizado = this.Veiculos.Find(x => x.IdTIcket == idTicket);
 
             return carroLocalizado;
         }
@@ -93,6 +97,21 @@ namespace Alura.Estacionamento.Modelos
             veiculotemporario.AlterarDados(veiculoAlterado);
 
             return veiculotemporario;
+        }
+
+        public string GerarTicket(Veiculo veiculo)
+        {
+            veiculo.IdTIcket = new Guid().ToString().Substring(0, 5);
+
+            string ticket = $"### Ticket Estacionamento Alura ###\n " +
+                            $">>> Identificador: {veiculo.IdTIcket}\n " +
+                            $">>> Data/Hora de entrada: {DateTime.Now}\n " +
+                            $">>> Placa Veículo: {veiculo.Placa}\n " +
+                            $">>> Operador Patio: {Operador.Nome}";
+
+            veiculo.Ticket = ticket;
+
+            return ticket;
         }
     }
 }

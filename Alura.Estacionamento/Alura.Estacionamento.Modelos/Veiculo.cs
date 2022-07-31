@@ -19,9 +19,22 @@ namespace Alura.Estacionamento.Modelos
 
         //Campos    
         private string _placa;
-        private string _proprietario;
+        private string proprietario;
         private TipoVeiculo _tipo;
+        private string ticket;
 
+        public string IdTIcket { get; set; }
+        public string Ticket
+        {
+            get
+            {
+                return ticket;
+            }
+            set
+            {
+                ticket = value;
+            }
+        }
         public string Placa
         {
             get
@@ -60,20 +73,24 @@ namespace Alura.Estacionamento.Modelos
 
             }
         }
-        /// <summary>
-        /// { get; set; } cria uma propriedade automática, ou seja,
-        /// durante a compilação, é gerado um atributo para armazenar
-        /// o valor da propriedade e os metodos get e set, respectivamente,
-        /// lêem e escrevem diretamente no atributo gerado, sem
-        /// qualquer validação. É um recurso útil, pois as propriedades
-        /// permitem fazer melhor uso do recurso de Reflection do .Net
-        /// Framework, entre outros benefícios.
-        /// </summary>
         public string Cor { get; set; }
         public double Largura { get; set; }
         public double VelocidadeAtual { get; set; }
         public string Modelo { get; set; }
-        public string Proprietario { get; set; }
+        public string Proprietario
+        {
+            get
+            {
+                return proprietario;
+            }
+            set
+            {
+                if (value.Length < 3)
+                    throw new FormatException(" Nome de proprietário inválido");
+
+                proprietario = value;
+            }
+        }
         public DateTime HoraEntrada { get; set; }
         public DateTime HoraSaida { get; set; }
         public TipoVeiculo Tipo

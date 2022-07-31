@@ -9,17 +9,22 @@ namespace Alura.Estacionamento.Testes
     {
         private Veiculo veiculo;
         private Patio estacionamento;
+        private Operador operador;
+
 
         public PatioTeste()
         {
             veiculo = new Veiculo();
             estacionamento = new Patio();
+            operador = new Operador("Operador 1");
         }
 
         [Fact]
         public void ValidaFaturamentoDoEstacionamentoComUmVeiculo()
         {
             //Arrange
+            estacionamento.Operador = operador;
+
             veiculo.Proprietario = "Dono";
             veiculo.Tipo = TipoVeiculo.Automovel;
             veiculo.Cor = "Verde";
@@ -48,6 +53,8 @@ namespace Alura.Estacionamento.Testes
                                                         string modelo)
         {
             //Arrange
+            estacionamento.Operador = operador;
+
             veiculo.Proprietario = proprietario;
             veiculo.Tipo = tipo;
             veiculo.Cor = cor;
@@ -66,13 +73,16 @@ namespace Alura.Estacionamento.Testes
 
         [Theory]
         [InlineData(TipoVeiculo.Automovel, "Pedro Teste", "QQQ-1194", "Vermelho", "Kwid")]
-        public void LocalizaVeiculoNoPatioComBaseNaPlaca(TipoVeiculo tipo,
+        public void LocalizaVeiculoNoPatioComBaseNoIdTicket(TipoVeiculo tipo,
                                           string proprietario,
                                           string placa,
                                           string cor,
                                           string modelo)
         {
             //Arrange
+
+            estacionamento.Operador = operador;
+
             veiculo.Proprietario = proprietario;
             veiculo.Tipo = tipo;
             veiculo.Cor = cor;
@@ -82,16 +92,19 @@ namespace Alura.Estacionamento.Testes
             estacionamento.RegistrarEntradaVeiculo(veiculo);
 
             //Act
-            var consultado = estacionamento.PesquisaVeiculo(veiculo.Placa);
+            var consultado = estacionamento.PesquisaVeiculo(veiculo.IdTIcket);
 
             //Assert
-            Assert.Equal(placa, consultado.Placa);
+            Assert.Contains("### Ticket Estacionamento Alura ###", consultado.Ticket);
         }
 
         [Fact]
         public void AlterarDadosDoVeiculo()
         {
             //Arrange
+
+            estacionamento.Operador = operador;
+
             veiculo.Proprietario = "Dono";
             veiculo.Tipo = TipoVeiculo.Automovel;
             veiculo.Cor = "Verde";
@@ -116,7 +129,7 @@ namespace Alura.Estacionamento.Testes
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+
         }
     }
 }
