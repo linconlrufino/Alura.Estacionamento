@@ -23,7 +23,7 @@ namespace Alura.Estacionamento.Testes
         public void ValidaFaturamentoDoEstacionamentoComUmVeiculo()
         {
             //Arrange
-            estacionamento.Operador = operador;
+            estacionamento.DefinirOperador(operador);
 
             veiculo.Proprietario = "Dono";
             veiculo.Tipo = TipoVeiculo.Automovel;
@@ -53,7 +53,7 @@ namespace Alura.Estacionamento.Testes
                                                         string modelo)
         {
             //Arrange
-            estacionamento.Operador = operador;
+            estacionamento.DefinirOperador(operador);
 
             veiculo.Proprietario = proprietario;
             veiculo.Tipo = tipo;
@@ -80,8 +80,7 @@ namespace Alura.Estacionamento.Testes
                                           string modelo)
         {
             //Arrange
-
-            estacionamento.Operador = operador;
+            estacionamento.DefinirOperador(operador);
 
             veiculo.Proprietario = proprietario;
             veiculo.Tipo = tipo;
@@ -92,10 +91,10 @@ namespace Alura.Estacionamento.Testes
             estacionamento.RegistrarEntradaVeiculo(veiculo);
 
             //Act
-            var consultado = estacionamento.PesquisaVeiculo(veiculo.IdTIcket);
+            var consultado = estacionamento.PesquisaVeiculo(veiculo.Ticket.Id);
 
             //Assert
-            Assert.Contains("### Ticket Estacionamento Alura ###", consultado.Ticket);
+            Assert.Contains("### Ticket Estacionamento Alura ###", consultado.Ticket.Cupom);
         }
 
         [Fact]
@@ -103,7 +102,7 @@ namespace Alura.Estacionamento.Testes
         {
             //Arrange
 
-            estacionamento.Operador = operador;
+            estacionamento.DefinirOperador(operador);
 
             veiculo.Proprietario = "Dono";
             veiculo.Tipo = TipoVeiculo.Automovel;

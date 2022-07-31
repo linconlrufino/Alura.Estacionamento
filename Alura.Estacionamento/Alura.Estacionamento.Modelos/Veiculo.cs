@@ -21,20 +21,8 @@ namespace Alura.Estacionamento.Modelos
         private string _placa;
         private string proprietario;
         private TipoVeiculo _tipo;
-        private string ticket;
 
-        public string IdTIcket { get; set; }
-        public string Ticket
-        {
-            get
-            {
-                return ticket;
-            }
-            set
-            {
-                ticket = value;
-            }
-        }
+        public Ticket Ticket { get; private set; }
         public string Placa
         {
             get
@@ -106,14 +94,19 @@ namespace Alura.Estacionamento.Modelos
             }
         }
 
+        public void AtribuirTicket(Ticket ticket)
+        {
+            Ticket = ticket;
+        }
+
         public void Acelerar(int tempoSeg)
         {
-            this.VelocidadeAtual += (tempoSeg * 10);
+            VelocidadeAtual += (tempoSeg * 10);
         }
 
         public void Frear(int tempoSeg)
         {
-            this.VelocidadeAtual -= (tempoSeg * 15);
+            VelocidadeAtual -= (tempoSeg * 15);
         }
 
         public void AlterarDados(Veiculo veiculoAlterado)
