@@ -1,20 +1,25 @@
 ﻿using Alura.Estacionamento.Alura.Estacionamento.Modelos;
 using Alura.Estacionamento.Modelos;
+using System;
 using Xunit;
 
 namespace Alura.Estacionamento.Testes
 {
-    public class PatioTeste
+    public class PatioTeste : IDisposable
     {
+        private Veiculo veiculo;
+        private Patio estacionamento;
 
+        public PatioTeste()
+        {
+            veiculo = new Veiculo();
+            estacionamento = new Patio();
+        }
 
         [Fact]
         public void ValidaFaturamentoDoEstacionamentoComUmVeiculo()
         {
             //Arrange
-            var estacionamento = new Patio();
-
-            var veiculo = new Veiculo();
             veiculo.Proprietario = "Dono";
             veiculo.Tipo = TipoVeiculo.Automovel;
             veiculo.Cor = "Verde";
@@ -43,9 +48,6 @@ namespace Alura.Estacionamento.Testes
                                                         string modelo)
         {
             //Arrange
-            var estacionamento = new Patio();
-
-            var veiculo = new Veiculo();
             veiculo.Proprietario = proprietario;
             veiculo.Tipo = tipo;
             veiculo.Cor = cor;
@@ -71,9 +73,6 @@ namespace Alura.Estacionamento.Testes
                                           string modelo)
         {
             //Arrange
-            var estacionamento = new Patio();
-
-            var veiculo = new Veiculo();
             veiculo.Proprietario = proprietario;
             veiculo.Tipo = tipo;
             veiculo.Cor = cor;
@@ -93,9 +92,6 @@ namespace Alura.Estacionamento.Testes
         public void AlterarDadosDoVeiculo()
         {
             //Arrange
-            var estacionamento = new Patio();
-
-            var veiculo = new Veiculo();
             veiculo.Proprietario = "Dono";
             veiculo.Tipo = TipoVeiculo.Automovel;
             veiculo.Cor = "Verde";
@@ -116,6 +112,11 @@ namespace Alura.Estacionamento.Testes
 
             //Assert
             Assert.Equal(veiculoAlterado.Cor, alterado.Cor);
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

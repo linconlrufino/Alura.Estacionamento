@@ -1,21 +1,33 @@
 using Alura.Estacionamento.Alura.Estacionamento.Modelos;
 using Alura.Estacionamento.Modelos;
+using System;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Alura.Estacionamento.Testes
 {
-    public class VeiculoTeste
+    public class VeiculoTeste : IDisposable
     {
         //Arrange
-        //Act
+        //Act    
         //Assert
+
+        private Veiculo veiculo;
+
+        public ITestOutputHelper SaidaConsoleTeste;
+
+        public VeiculoTeste(ITestOutputHelper saidaConsoleTeste)
+        {
+            SaidaConsoleTeste = saidaConsoleTeste;
+            SaidaConsoleTeste.WriteLine("Construtor invocado");
+            veiculo = new Veiculo();
+        }
 
         [Fact]
         [Trait("Funcionalidade", "Acelerar")]
         public void TestaVeiculoAcelerarComParametro10()
         {
             //Arrange
-            var veiculo = new Veiculo();
 
             //Act
             veiculo.Acelerar(10);
@@ -29,8 +41,6 @@ namespace Alura.Estacionamento.Testes
 
         public void TestarVeiculoFrearComParametro10()
         {
-            var veiculo = new Veiculo();
-
             veiculo.Frear(10);
 
             Assert.Equal(-150, veiculo.VelocidadeAtual);
@@ -40,7 +50,6 @@ namespace Alura.Estacionamento.Testes
         public void TestarTipoDoVeiculo()
         {
             //Arrange
-            var veiculo = new Veiculo();
             //Action
 
             //Assert
@@ -56,17 +65,21 @@ namespace Alura.Estacionamento.Testes
         [Fact]
         public void FichaDeInformacaoDoVeiculo()
         {
-            var carro = new Veiculo();
 
-            carro.Proprietario = "Dono";
-            carro.Tipo = TipoVeiculo.Automovel;
-            carro.Cor = "Cinza";
-            carro.Modelo = "Lancer";
-            carro.Placa = "asd-9999";
+            veiculo.Proprietario = "Dono";
+            veiculo.Tipo = TipoVeiculo.Automovel;
+            veiculo.Cor = "Cinza";
+            veiculo.Modelo = "Lancer";
+            veiculo.Placa = "asd-9999";
 
-            string dados = carro.ToString();
+            string dados = veiculo.ToString();
 
             Assert.Contains("Ficha do Veiculo:", dados);
+        }
+
+        public void Dispose()
+        {
+            SaidaConsoleTeste.WriteLine("Construtor invocado");
         }
     }
 }
