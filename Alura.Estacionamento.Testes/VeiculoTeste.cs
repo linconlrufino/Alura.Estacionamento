@@ -10,10 +10,9 @@ namespace Alura.Estacionamento.Testes
         //Act
         //Assert
 
-        //[Fact(DisplayName = "Teste n1")]
         [Fact]
         [Trait("Funcionalidade", "Acelerar")]
-        public void TestaVeiculoAcelerar()
+        public void TestaVeiculoAcelerarComParametro10()
         {
             //Arrange
             var veiculo = new Veiculo();
@@ -28,7 +27,7 @@ namespace Alura.Estacionamento.Testes
         [Fact]
         [Trait("Funcionalidade", "Frear")]
 
-        public void TestarVeiculoFrear()
+        public void TestarVeiculoFrearComParametro10()
         {
             var veiculo = new Veiculo();
 
@@ -38,7 +37,7 @@ namespace Alura.Estacionamento.Testes
         }
 
         [Fact]
-        public void TestarTipoVeiculo()
+        public void TestarTipoDoVeiculo()
         {
             //Arrange
             var veiculo = new Veiculo();
@@ -49,9 +48,25 @@ namespace Alura.Estacionamento.Testes
         }
 
         [Fact(Skip = "Teste ainda não implementado . Ignorar")]
-        public void ValidaNomeProprietario()
+        public void ValidaNomeProprietarioDoVeiculo()
         {
 
+        }
+
+        [Fact]
+        public void FichaDeInformacaoDoVeiculo()
+        {
+            var carro = new Veiculo();
+
+            carro.Proprietario = "Dono";
+            carro.Tipo = TipoVeiculo.Automovel;
+            carro.Cor = "Cinza";
+            carro.Modelo = "Lancer";
+            carro.Placa = "asd-9999";
+
+            string dados = carro.ToString();
+
+            Assert.Contains("Ficha do Veiculo:", dados);
         }
     }
 }
