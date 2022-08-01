@@ -10,8 +10,14 @@ namespace Alura.Estacionamento
         // os veículos (automovéis e motos) que estão no estacionamento;
         static Patio estacionamento = new Patio();
 
+
+
         static void Main(string[] args)
         {
+            Operador operador = new Operador("Operador1");
+
+            estacionamento.DefinirOperador(operador);
+
             string opcao;
             do
             {
@@ -78,13 +84,16 @@ namespace Alura.Estacionamento
         static void RegistrarEntradaMotocicleta()
         {
             Console.WriteLine("Dados da Motocicleta");
-            Veiculo moto = new Veiculo();
-            moto.Tipo = TipoVeiculo.Motocicleta;
-            //preeencher placa,cor,hora,entrada e proprietário
+
+            var tipo = TipoVeiculo.Motocicleta;
+
             Console.Write("Digite os dados da placa (XXX-9999): ");
+
+            string placa;
+
             try
             {
-                moto.Placa = Console.ReadLine();
+                placa = Console.ReadLine();
             }
             catch (FormatException fe)
             {
@@ -93,13 +102,21 @@ namespace Alura.Estacionamento
                 Console.ReadKey();
                 return;
             }
+
             Console.Write("Digite a cor da moto: ");
-            moto.Cor = Console.ReadLine();
+            var cor = Console.ReadLine();
+
+            Console.Write("Digite o modelo da moto: ");
+            var modelo = Console.ReadLine();
+
             Console.Write("Digite o nome do proprietário: ");
-            moto.Proprietario = Console.ReadLine();
-            moto.HoraEntrada = DateTime.Now;
+            var proprietario = Console.ReadLine();
+
+            Veiculo moto = new Veiculo(proprietario, placa, cor, modelo, tipo);
+
             moto.Acelerar(5);
             moto.Frear(5);
+
             estacionamento.RegistrarEntradaVeiculo(moto);
             Console.WriteLine("Motocicleta registrada com sucesso!");
             Console.ReadKey();
@@ -108,13 +125,15 @@ namespace Alura.Estacionamento
         static void RegistrarEntradaAutomovel()
         {
             Console.WriteLine("Dados do Automovél");
-            Veiculo carro = new Veiculo();
-            carro.Tipo = TipoVeiculo.Automovel;
-            //preeencher placa,cor,hora,entrada e proprietário.
+
+            var tipo = TipoVeiculo.Automovel;
+
+            string placa;
             Console.Write("Digite os dados da placa (XXX-9999): ");
             try
             {
-                carro.Placa = Console.ReadLine();
+                placa = Console.ReadLine();
+                //estacionamento.ValidarPlaca(placa);
             }
             catch (FormatException fe)
             {
@@ -122,13 +141,44 @@ namespace Alura.Estacionamento
                 PressionaTecla();
                 return;
             }
+
             Console.Write("Digite a cor do carro: ");
-            carro.Cor = Console.ReadLine();
+            var cor = Console.ReadLine();
+
+            Console.Write("Digite o modelo do carro: ");
+            var modelo = Console.ReadLine();
+
+            string proprietario;
             Console.Write("Digite o nome do proprietário: ");
-            carro.Proprietario = Console.ReadLine();
-            carro.HoraEntrada = DateTime.Now;
+            try
+            {
+                proprietario = Console.ReadLine();
+                //estacionamento.ValidarProprietario(proprietario);
+            }
+            catch (FormatException fe)
+            {
+                Console.WriteLine("ocorreu um problema: {0}", fe.Message);
+                PressionaTecla();
+                return;
+            }
+
+            Veiculo carro;
+
+            try
+            {
+                carro = new Veiculo(proprietario, placa, cor, modelo, tipo);
+            }
+            catch (FormatException fe)
+            {
+                Console.WriteLine("ocorreu um problema: {0}", fe.Message);
+                PressionaTecla();
+                return;
+            }
+            //Veiculo carro = new Veiculo(proprietario, placa, cor, modelo, tipo);
+
             carro.Acelerar(5);
             carro.Frear(5);
+
             estacionamento.RegistrarEntradaVeiculo(carro);
             Console.WriteLine("Automóvel registrado com sucesso!");
         }
@@ -189,7 +239,5 @@ namespace Alura.Estacionamento
                     break;
             }
         }
-
     }
-
 }

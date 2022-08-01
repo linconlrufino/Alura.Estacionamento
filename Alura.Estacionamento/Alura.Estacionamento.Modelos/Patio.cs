@@ -47,7 +47,7 @@ namespace Alura.Estacionamento.Modelos
 
         public void RegistrarEntradaVeiculo(Veiculo veiculo)
         {
-            veiculo.HoraEntrada = DateTime.Now;
+            veiculo.RegistrarHoraDeEntrada(DateTime.Now);
             GerarTicket(veiculo);
             AdicionarVeiculoAoPatio(veiculo);
         }
@@ -61,7 +61,7 @@ namespace Alura.Estacionamento.Modelos
             {
                 if (v.Placa == placa)
                 {
-                    v.HoraSaida = DateTime.Now;
+                    v.DefinirHoraDeSaida(DateTime.Now);
                     TimeSpan tempoPermanencia = v.HoraSaida - v.HoraEntrada;
                     double valorASerCobrado = 0;
 

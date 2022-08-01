@@ -65,25 +65,16 @@ namespace Alura.Estacionamento.Testes
         [Fact]
         public void FichaDeInformacaoDoVeiculo()
         {
-
-            veiculo.Proprietario = "Dono";
-            veiculo.Tipo = TipoVeiculo.Automovel;
-            veiculo.Cor = "Cinza";
-            veiculo.Modelo = "Lancer";
-            veiculo.Placa = "asd-9999";
-
             string dados = veiculo.ToString();
 
-            Assert.Contains("Ficha do Veiculo:", dados);
+            Assert.Contains("Ficha do veiculo:", dados);
         }
 
         [Fact]
         public void TestaNomeProprietarioVeiculoComMenosDeTresCaracteres()
         {
-            string nomeProprietario = "Ab";
-
             Assert.Throws<FormatException>(
-                () => new Veiculo(nomeProprietario)
+                () => new Veiculo("Ab", "asd-9999", "Verde", "Lancer", TipoVeiculo.Automovel)
             );
         }
 
@@ -91,11 +82,11 @@ namespace Alura.Estacionamento.Testes
         public void TestaMensagemDeExcecaoDoQuartoCaractereDaPlaca()
         {
             //Arrange
-            string placa = "ASDF8888";
+            string placaincorreta = "ASDF8888";
 
             //Act
             var mensagem = Assert.Throws<FormatException>(
-                () => new Veiculo().Placa = placa
+                    () => new Veiculo("Abias", placaincorreta, "Verde", "Lancer", TipoVeiculo.Automovel)
             );
 
             //Assert

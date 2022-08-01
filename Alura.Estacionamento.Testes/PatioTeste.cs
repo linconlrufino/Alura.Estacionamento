@@ -14,7 +14,7 @@ namespace Alura.Estacionamento.Testes
 
         public PatioTeste()
         {
-            veiculo = new Veiculo();
+            veiculo = new Veiculo("Abias", "asd-9999", "Verde", "Lancer", TipoVeiculo.Automovel);
             estacionamento = new Patio();
             operador = new Operador("Operador 1");
         }
@@ -24,13 +24,6 @@ namespace Alura.Estacionamento.Testes
         {
             //Arrange
             estacionamento.DefinirOperador(operador);
-
-            veiculo.Proprietario = "Dono";
-            veiculo.Tipo = TipoVeiculo.Automovel;
-            veiculo.Cor = "Verde";
-            veiculo.Modelo = "Fusca";
-            veiculo.Placa = "asd-9999";
-
             estacionamento.RegistrarEntradaVeiculo(veiculo);
             estacionamento.RegistrarSaidaVeiculo(veiculo.Placa);
 
@@ -55,11 +48,7 @@ namespace Alura.Estacionamento.Testes
             //Arrange
             estacionamento.DefinirOperador(operador);
 
-            veiculo.Proprietario = proprietario;
-            veiculo.Tipo = tipo;
-            veiculo.Cor = cor;
-            veiculo.Modelo = modelo;
-            veiculo.Placa = placa;
+            var veiculo = new Veiculo(proprietario, placa, cor, modelo, tipo);
 
             estacionamento.RegistrarEntradaVeiculo(veiculo);
             estacionamento.RegistrarSaidaVeiculo(veiculo.Placa);
@@ -82,11 +71,7 @@ namespace Alura.Estacionamento.Testes
             //Arrange
             estacionamento.DefinirOperador(operador);
 
-            veiculo.Proprietario = proprietario;
-            veiculo.Tipo = tipo;
-            veiculo.Cor = cor;
-            veiculo.Modelo = modelo;
-            veiculo.Placa = placa;
+            var veiculo = new Veiculo(proprietario, placa, cor, modelo, tipo);
 
             estacionamento.RegistrarEntradaVeiculo(veiculo);
 
@@ -104,20 +89,9 @@ namespace Alura.Estacionamento.Testes
 
             estacionamento.DefinirOperador(operador);
 
-            veiculo.Proprietario = "Dono";
-            veiculo.Tipo = TipoVeiculo.Automovel;
-            veiculo.Cor = "Verde";
-            veiculo.Modelo = "Fusca";
-            veiculo.Placa = "asd-9999";
-
             estacionamento.RegistrarEntradaVeiculo(veiculo);
 
-            var veiculoAlterado = new Veiculo();
-            veiculoAlterado.Proprietario = "Dono";
-            veiculoAlterado.Tipo = TipoVeiculo.Automovel;
-            veiculoAlterado.Cor = "Cinza";
-            veiculoAlterado.Modelo = "Fusca";
-            veiculoAlterado.Placa = "asd-9999";
+            var veiculoAlterado = new Veiculo("Abias", "asd-9999", "Amarelo", "Corolla", TipoVeiculo.Automovel);
 
             //Act
             Veiculo alterado = estacionamento.AlterarDadosVeiculo(veiculoAlterado);

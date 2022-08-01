@@ -1,7 +1,5 @@
 ﻿using Alura.Estacionamento.Alura.Estacionamento.Modelos;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Alura.Estacionamento.Modelos
 {
@@ -12,86 +10,41 @@ namespace Alura.Estacionamento.Modelos
 
         }
 
-        public Veiculo(string proprietario)
+        public Veiculo(string proprietario,
+                       string placa,
+                       string cor,
+                       string modelo,
+                       TipoVeiculo tipo = TipoVeiculo.Automovel)
         {
+            ValidarProprietario(proprietario);
             Proprietario = proprietario;
+            ValidarPlaca(placa);
+            Placa = placa;
+            Cor = cor;
+            Modelo = modelo;
+            Tipo = tipo;
         }
 
         //Campos    
-        private string _placa;
-        private string proprietario;
-        private TipoVeiculo _tipo;
-
+        public TipoVeiculo Tipo { get; private set; }
+        public string Placa { get; private set; }
+        public string Proprietario { get; private set; }
         public Ticket Ticket { get; private set; }
-        public string Placa
-        {
-            get
-            {
-                return _placa;
-            }
-            set
-            {
-                // Checa se o valor possui pelo menos 8 caracteres
-                if (value.Length != 8)
-                {
-                    throw new FormatException(" A placa deve possuir 8 caracteres");
-                }
-                for (int i = 0; i < 3; i++)
-                {
-                    //checa se os 3 primeiros caracteres são numeros
-                    if (char.IsDigit(value[i]))
-                    {
-                        throw new FormatException("Os 3 primeiros caracteres devem ser letras!");
-                    }
-                }
-                //checa o Hifem
-                if (value[3] != '-')
-                {
-                    throw new FormatException("O 4° caractere deve ser um hífen");
-                }
-                //checa se os 3 primeiros caracteres são numeros
-                for (int i = 4; i < 8; i++)
-                {
-                    if (!char.IsDigit(value[i]))
-                    {
-                        throw new FormatException("Do 5º ao 8º caractere deve-se ter um número!");
-                    }
-                }
-                _placa = value;
+        public string Cor { get; private set; }
+        public double Largura { get; private set; }
+        public double VelocidadeAtual { get; private set; }
+        public string Modelo { get; private set; }
+        public DateTime HoraEntrada { get; private set; }
+        public DateTime HoraSaida { get; private set; }
 
-            }
-        }
-        public string Cor { get; set; }
-        public double Largura { get; set; }
-        public double VelocidadeAtual { get; set; }
-        public string Modelo { get; set; }
-        public string Proprietario
+        public void DefinirHoraDeSaida(DateTime hora)
         {
-            get
-            {
-                return proprietario;
-            }
-            set
-            {
-                if (value.Length < 3)
-                    throw new FormatException(" Nome de proprietário inválido");
+            HoraSaida = hora;
+        }
 
-                proprietario = value;
-            }
-        }
-        public DateTime HoraEntrada { get; set; }
-        public DateTime HoraSaida { get; set; }
-        public TipoVeiculo Tipo
+        public void RegistrarHoraDeEntrada(DateTime hora)
         {
-            get { return _tipo; }
-            set
-            {
-                if (value == null)
-                {
-                    _tipo = TipoVeiculo.Automovel;
-                }
-                else { _tipo = value; }
-            }
+            HoraEntrada = hora;
         }
 
         public void AtribuirTicket(Ticket ticket)
@@ -117,10 +70,46 @@ namespace Alura.Estacionamento.Modelos
             Cor = veiculoAlterado.Cor;
         }
 
+        public void ValidarPlaca(string placa)
+        {
+            // Checa se o valor possui pelo menos 8 caracteres
+            if (placa.Length != 8)
+            {
+                throw new FormatException(" A placa deve possuir 8 caracteres");
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                //checa se os 3 primeiros caracteres são numeros
+                if (char.IsDigit(placa[i]))
+                {
+                    throw new FormatException("Os 3 primeiros caracteres devem ser letras!");
+                }
+            }
+            //checa o Hifem
+            if (placa[3] != '-')
+            {
+                throw new FormatException("O 4° caractere deve ser um hífen");
+            }
+            //checa se os 3 primeiros caracteres são numeros
+            for (int i = 4; i < 8; i++)
+            {
+                if (!char.IsDigit(placa[i]))
+                {
+                    throw new FormatException("Do 5º ao 8º caractere deve-se ter um número!");
+                }
+            }
+        }
+
+        public void ValidarProprietario(string proprietario)
+        {
+            if (proprietario.Length < 3)
+                throw new FormatException(" Nome de proprietário inválido");
+        }
+
         public override string ToString()
         {
-            return $"Ficha do Veiculo:\n " +
-                   $"Tipo de Veículo: {Tipo.ToString()}\n " +
+            return $"Ficha do veiculo:\n " +
+                   $"Tipo de veículo: {Tipo.ToString()}\n " +
                    $"Proprietário: {Proprietario}\n " +
                    $"Modelo: {Modelo}\n " +
                    $"Cor: {Cor}\n " +
